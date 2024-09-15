@@ -58,7 +58,16 @@ class SingleProductPage extends StatelessWidget {
                           ),
                         );
                       },
-                      child: const Text("Edit"),
+                      child: const Text("Update Product"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await ApiService.deleteProduct(product.id!);
+                        Navigator.pop(context);
+                      },
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      child: const Text("Delete"),
                     ),
                   ],
                 ),
