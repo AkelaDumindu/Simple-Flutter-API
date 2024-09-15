@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_flutter_api/api/api_service.dart';
 import 'package:simple_flutter_api/model/product_model.dart';
+import 'package:simple_flutter_api/sccreens/single_product_page.dart';
 
 class AllProdutsPage extends StatefulWidget {
   const AllProdutsPage({super.key});
@@ -33,21 +34,30 @@ class _AllProdutsPageState extends State<AllProdutsPage> {
                 itemBuilder: (context, index) {
                   ProductModel products = snapshot.data![index];
                   return Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey[200],
+                    margin: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey[200],
+                    ),
+                    child: ListTile(
+                      title: Text(products.name),
+                      subtitle: Text("\$${products.price}"),
+                      leading: Image.network(
+                        products.image,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
                       ),
-                      child: ListTile(
-                        title: Text(products.name),
-                        subtitle: Text("\$${products.price}"),
-                        leading: Image.network(
-                          products.image,
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                      ));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  SingleProductPage(productId: products.id!),
+                            ));
+                      },
+                    ),
+                  );
                 },
               );
             }

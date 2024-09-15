@@ -14,7 +14,7 @@ class ApiService {
 
       // if we have response
       if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(response.body);
+        List<dynamic> responseData = json.decode(response.body);
         List<ProductModel> products = responseData.map((json) {
           return ProductModel.fromjson(json);
         }).toList();
@@ -27,6 +27,27 @@ class ApiService {
     } catch (e) {
       print(e);
       throw Exception("Failed to get all products");
+    }
+  }
+
+  // get one product
+  static Future<ProductModel> getProduct(int id) async {
+    final String url = 'https://fakestoreapi.com/products/$id';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        ProductModel product =
+            ProductModel.fromjson(json.decode(response.body));
+        return product;
+      } else {
+        print("Failed to fetch product. Status code: ${response.statusCode}");
+        throw Exception("Failed to fetch product");
+      }
+    } catch (e) {
+      print(e);
+      throw Exception("failed to fetch product");
     }
   }
 }
