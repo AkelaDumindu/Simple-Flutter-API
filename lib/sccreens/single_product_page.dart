@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_flutter_api/api/api_service.dart';
 import 'package:simple_flutter_api/model/product_model.dart';
+import 'package:simple_flutter_api/sccreens/update_product_page.dart';
 
 class SingleProductPage extends StatelessWidget {
   final int productId;
@@ -44,6 +45,21 @@ class SingleProductPage extends StatelessWidget {
                         style: const TextStyle(fontSize: 20.0)),
                     const SizedBox(height: 8.0),
                     Text(product.description),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                UpdateProductPage(product: product),
+                          ),
+                        );
+                      },
+                      child: const Text("Edit"),
+                    ),
                   ],
                 ),
               );
