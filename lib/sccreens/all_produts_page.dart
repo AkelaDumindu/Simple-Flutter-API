@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_flutter_api/api/api_service.dart';
 import 'package:simple_flutter_api/model/product_model.dart';
+import 'package:simple_flutter_api/sccreens/add_product_page.dart';
 import 'package:simple_flutter_api/sccreens/single_product_page.dart';
 
 class AllProdutsPage extends StatefulWidget {
@@ -16,6 +17,17 @@ class _AllProdutsPageState extends State<AllProdutsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("All Products"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddProductPage(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
       ),
       body: Padding(
         padding: EdgeInsets.all(10),

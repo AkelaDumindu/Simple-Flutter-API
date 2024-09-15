@@ -5,6 +5,7 @@ import 'package:simple_flutter_api/model/product_model.dart';
 
 class ApiService {
   // get all products
+  // return product list so add to the list and productmodel
   static Future<List<ProductModel>> getAllProducts() async {
     const String url = 'https://fakestoreapi.com/products';
 
@@ -31,6 +32,7 @@ class ApiService {
   }
 
   // get one product
+  // return only one product
   static Future<ProductModel> getProduct(int id) async {
     final String url = 'https://fakestoreapi.com/products/$id';
 
@@ -48,6 +50,41 @@ class ApiService {
     } catch (e) {
       print(e);
       throw Exception("failed to fetch product");
+    }
+  }
+
+  // add product
+
+  static Future<ProductModel> addProduct(ProductModel product) async {
+    const String url = 'https://fakestoreapi.com/products';
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(product.tojson()),
+      );
+
+      print("Response status code: ${response.statusCode}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // print product as json
+        print(response.body);
+
+        // get new product as product
+        ProductModel newProduct = ProductModel.fromjson(
+          json.decode(response.body),
+        );
+
+        return newProduct;
+      } else {
+        print("Failed to add product. Status code: ${response.statusCode}");
+        print(response.body);
+        throw Exception("Failed to add product");
+      }
+    } catch (e) {
+      print(e);
+      throw Exception("failed to create product");
     }
   }
 }
